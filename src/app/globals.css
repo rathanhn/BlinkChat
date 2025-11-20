@@ -1,0 +1,202 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+@layer base {
+  :root {
+    --background: 240 10% 3.9%;
+    --foreground: 0 0% 98%;
+    --card: 240 10% 3.9%;
+    --card-foreground: 0 0% 98%;
+    --popover: 240 10% 3.9%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 260 80% 60%;
+    --primary-foreground: 0 0% 98%;
+    --secondary: 240 3.7% 15.9%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 240 3.7% 15.9%;
+    --muted-foreground: 0 0% 63.9%;
+    --accent: 340 80% 70%;
+    --accent-foreground: 0 0% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 240 3.7% 15.9%;
+    --input: 240 3.7% 15.9%;
+    --ring: 260 80% 60%;
+    --chart-1: 220 70% 50%;
+    --chart-2: 160 60% 45%;
+    --chart-3: 30 80% 55%;
+    --chart-4: 280 65% 60%;
+    --chart-5: 340 75% 55%;
+    --radius: 0.75rem;
+  }
+  .dark {
+    --background: 240 10% 3.9%;
+    --foreground: 0 0% 98%;
+    --card: 240 10% 3.9%;
+    --card-foreground: 0 0% 98%;
+    --popover: 240 10% 3.9%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 260 80% 60%;
+    --primary-foreground: 0 0% 98%;
+    --secondary: 240 3.7% 15.9%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 240 3.7% 15.9%;
+    --muted-foreground: 0 0% 63.9%;
+    --accent: 340 80% 70%;
+    --accent-foreground: 0 0% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 240 3.7% 15.9%;
+    --input: 240 3.7% 15.9%;
+    --ring: 260 80% 60%;
+    --chart-1: 220 70% 50%;
+    --chart-2: 160 60% 45%;
+    --chart-3: 30 80% 55%;
+    --chart-4: 280 65% 60%;
+    --chart-5: 340 75% 55%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+    background: linear-gradient(180deg, #100f1c 0%, #0d1a38 100%);
+  }
+}
+
+@layer utilities {
+  .gradient-text {
+    @apply bg-gradient-to-r from-primary to-accent text-transparent bg-clip-text;
+  }
+
+  @property --gradient-angle {
+    syntax: '<angle>';
+    initial-value: 0deg;
+    inherits: false;
+  }
+
+  .animated-gradient-border {
+    position: relative;
+    border-radius: var(--radius);
+    border: 2.5px solid transparent; /* The visible border */
+    background-clip: padding-box; /* Ensures the background doesn't go under the border */
+    background-color: hsl(var(--card)); /* The background color of the card */
+  }
+
+  .animated-gradient-border::before {
+      content: '';
+      position: absolute;
+      inset: -2.5px; /* Controls the thickness of the gradient border */
+      z-index: -1;
+      background: conic-gradient(from var(--gradient-angle), hsl(var(--primary)), hsl(var(--accent)), hsl(var(--primary)));
+      border-radius: inherit;
+      animation: rotation 3s linear infinite;
+      opacity: 0;
+      transition: opacity 0.3s ease-in-out;
+  }
+  .group:hover > .animated-gradient-border::before,
+  .group:focus-within > .animated-gradient-border::before {
+      opacity: 1;
+  }
+
+
+  @keyframes rotation {
+    0% { --gradient-angle: 0deg; }
+    100% { --gradient-angle: 360deg; }
+  }
+
+  /* Mobile chat layout utilities */
+  .mobile-chat-container {
+    position: relative;
+    height: 100%;
+    overflow: hidden;
+  }
+
+  .mobile-chat-main {
+    height: calc(100vh - 10rem); /* Account for header and footer */
+    overflow-y: auto;
+    padding-bottom: 10rem; /* Ensure content doesn't hide behind footer */
+  }
+
+  .mobile-chat-footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: hsl(var(--background) / 0.95);
+    backdrop-filter: blur(12px);
+    border-top: 1px solid hsl(var(--border) / 0.5);
+    z-index: 50;
+    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.1);
+  }
+
+  .mobile-chat-footer-content {
+    padding: 1rem;
+  }
+
+  /* Ensure proper spacing on mobile */
+  @media (max-width: 768px) {
+    .mobile-chat-main {
+      padding-bottom: 12rem; /* Extra padding to prevent content hiding */
+    }
+  }
+}
+
+.ReactCrop__crop-selection {
+  border: 2px dashed hsl(var(--primary));
+}
+
+/* Performance optimizations for smooth scrolling */
+@layer utilities {
+  .scroll-smooth {
+    scroll-behavior: smooth;
+  }
+  
+  .scroll-auto {
+    scroll-behavior: auto;
+  }
+  
+  /* Prevent layout shifts during scroll */
+  .will-change-transform {
+    will-change: transform;
+  }
+  
+  /* Optimize for mobile scrolling */
+  .overscroll-contain {
+    overscroll-behavior: contain;
+  }
+  
+  /* Prevent scroll bouncing on mobile */
+  .no-bounce {
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: none;
+  }
+  
+  /* Reduce motion for better performance */
+  .reduce-motion {
+    @media (prefers-reduced-motion: reduce) {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+/* Global scroll optimizations */
+html, body {
+  overscroll-behavior: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Prevent iOS momentum scrolling issues */
+* {
+  -webkit-tap-highlight-color: transparent;
+}
