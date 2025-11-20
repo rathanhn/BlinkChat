@@ -1,5 +1,5 @@
 'use client';
-
+export const dynamic = 'force-dynamic';
 import { useEffect, useState } from 'react';
 import { AppLayout } from '@/components/app-layout';
 import { Button } from '@/components/ui/button';
@@ -77,7 +77,7 @@ export default function BackfillEmailsPage() {
       <div className="max-w-xl">
         <h1 className="text-2xl font-bold font-headline">Backfill Emails Map</h1>
         <p className="text-muted-foreground mt-2">
-          Populate /emails/{{sanitized_email}} = uid for all existing users so email lookups work instantly.
+          Populate /emails/{'{{sanitized_email}}'}= uid for all existing users so email lookups work instantly.
         </p>
         <div className="mt-4">
           <Button onClick={runBackfill} disabled={isRunning}>
